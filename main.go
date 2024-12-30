@@ -16,6 +16,7 @@ type Login struct {
 // Key is the username
 var users = map[string]Login{}
 
+// Registers handler functions for the specified routes & HTTP server on port 8080
 func main() {
 	http.HandleFunc("/register", register)
 	http.HandleFunc("/login", login)
@@ -34,6 +35,7 @@ func register(w http.ResponseWriter, r *http.Request) {
 	username := r.FormValue("username")
 	password := r.FormValue("password")
 
+	// Check username acceptability & availability
 	if len(username) < 8 || len(password) < 8 {
 		er := http.StatusNotAcceptable
 		http.Error(w, "Invalid username/password", er)
@@ -46,6 +48,7 @@ func register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Password are hashed before storage to enhanced security
 	hashedPassword, _ := hashPassword(password)
 	users[username] = Login{
 		HashedPassword: hashedPassword,
@@ -135,6 +138,7 @@ func logout(w http.ResponseWriter, r *http.Request) {
 		Value:    "",
 		Expires:  time.Now().Add(-time.Hour),
 		HttpOnly: true,
+		Secure:   true,
 	})
 
 	//Set CSRF token in a cookie
@@ -143,6 +147,7 @@ func logout(w http.ResponseWriter, r *http.Request) {
 		Value:    "",
 		Expires:  time.Now().Add(-time.Hour),
 		HttpOnly: false, //need to be accesible from the client-side
+		Secure:   true,
 	})
 
 	//Clear the tokens from the database

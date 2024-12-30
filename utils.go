@@ -24,5 +24,5 @@ func generateToken(lenght int) string {
 		log.Fatalf("Failed to generate token: %v", err)
 	}
 
-	return base64.URLEncoding.EncodeToString(bytes)
+	return base64.URLEncoding.WithPadding(base64.NoPadding).EncodeToString(bytes) //%3D == "="
 }

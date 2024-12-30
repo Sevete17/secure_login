@@ -82,6 +82,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 		Value:    sessionToken,
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: true,
+		Secure:   true,
 	})
 
 	//Set CSRF token in a cookie
@@ -90,6 +91,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 		Value:    csrfToken,
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: false, //need to be accesible from the client-side
+		Secure:   true,
 	})
 
 	//Store tokens in the database

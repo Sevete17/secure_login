@@ -1,4 +1,4 @@
-------------------------------------------------------------------- Go Authentication System ---------------------------------------------------------------------
+------------------------------------------------------------------- Go Authentication System -----------------------------------------------------------------
 
 A simple authentication system built with Go that implements user registration, login, logout, and protected routes with CSRF protection
 
